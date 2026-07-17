@@ -14,28 +14,24 @@ header{display:flex;justify-content:space-between;align-items:center;gap:14px;bo
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .btn{border:0;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--navy);color:#fff}
 .btn.red{background:var(--red)}.btn.light{background:#fff;color:var(--navy);border:2px solid var(--navy)}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px}.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(20,40,75,.08)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(20,40,75,.08)}
 .topline{display:flex;gap:10px;flex-wrap:wrap}.pill{border-radius:999px;padding:8px 14px;font-weight:800;background:#eef3fb;color:var(--navy)}.pill.topic{background:#fff0bd;color:#725100}
 .question{font-weight:900;font-size:clamp(22px,3.2vw,34px);line-height:1.45;margin:18px 0}.choices{display:grid;gap:12px}
 .choice{display:flex;gap:14px;width:100%;text-align:left;padding:16px;border:2px solid var(--line);border-radius:18px;background:#fff;cursor:pointer}
 .choice:hover{border-color:#9eabc0}.letter{min-width:38px;height:38px;border-radius:50%;background:#eef2f7;display:grid;place-items:center;color:var(--navy);font-size:20px;font-weight:900}
 .choice.correct{border-color:var(--green);background:#eefaf2}.choice.correct .letter{background:var(--green);color:#fff}.choice.wrong{border-color:var(--red);background:#fff0f3}.choice.wrong .letter{background:var(--red);color:#fff}
 .feedback{display:none;margin-top:18px;padding:18px;border-radius:18px;line-height:1.75}.feedback.show{display:block}.feedback.good{background:#eefaf2;border:1px solid #bbdfc6}.feedback.bad{background:#fff0f3;border:1px solid #f2bac7}
-.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.gauge-card{text-align:center;position:sticky;top:14px;height:max-content}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.gauge-card{text-align:center;position:sticky;top:14px;height:calc(100vh - 28px);min-height:640px;display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .gauge-title{font-size:20px;font-weight:900;color:var(--red)}.height{font-size:34px;font-weight:900;color:var(--red);margin:5px}
 .animal-select{width:100%;padding:10px;border:2px solid var(--line);border-radius:12px;background:#fff;margin:8px 0}
-.gauge{position:relative;width:126px;height:510px;margin:12px auto 0;border:3px solid var(--yellow);border-radius:65px 65px 24px 24px;background:linear-gradient(#fff7cc,#fff);overflow:hidden}
+.gauge{position:relative;width:150px;height:min(520px,calc(100vh - 210px));min-height:380px;margin:12px auto 0;border:3px solid var(--yellow);border-radius:65px 65px 24px 24px;background:linear-gradient(#fff7cc,#fff);overflow:hidden}
 .fill{position:absolute;bottom:24px;left:45px;width:36px;height:0;background:linear-gradient(#ff7958,var(--red));border-radius:18px 18px 4px 4px;transition:.45s;height .45s}
-.animal{position:absolute;left:21px;bottom:22px;width:80px;height:80px;transition:bottom .45s;z-index:3}
-.giraffe-head{width:76px;height:78px;background:var(--yellow);border-radius:44% 44% 50% 50%;position:relative;margin:auto}.giraffe-head:before,.giraffe-head:after{content:"";position:absolute;top:-17px;width:13px;height:26px;background:var(--yellow);border-radius:50%}.giraffe-head:before{left:15px}.giraffe-head:after{right:15px}
-.eye{position:absolute;top:29px;width:7px;height:7px;background:#4a3820;border-radius:50%}.eye.l{left:21px}.eye.r{right:21px}.mouth{position:absolute;left:25px;top:49px;width:26px;height:10px;border-bottom:3px solid #865e1c;border-radius:50%}
-.pigeon{width:72px;height:58px;border-radius:50% 50% 46% 46%;background:#8b96a5;position:relative;margin:12px auto 0}.pigeon:before{content:"";position:absolute;right:-18px;top:18px;border-left:22px solid #8b96a5;border-top:10px solid transparent;border-bottom:10px solid transparent}.pigeon:after{content:"";position:absolute;left:21px;top:20px;width:8px;height:8px;border-radius:50%;background:#111}
-.beak{position:absolute;right:-29px;top:23px;border-left:13px solid #e8a433;border-top:6px solid transparent;border-bottom:6px solid transparent}.wing{position:absolute;left:10px;top:25px;width:33px;height:20px;background:#707b89;border-radius:50%}
-.import{display:none;margin-bottom:20px}.import.show{display:block}textarea{width:100%;min-height:250px;border:2px solid var(--line);border-radius:16px;padding:14px;resize:vertical}
-.help{font-size:14px;color:#697386;line-height:1.7}.result{text-align:center;padding:28px}.score{font-size:64px;font-weight:900;color:var(--red)}.hidden{display:none!important}
-.bottom{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(760px,calc(100% - 22px));background:var(--navy);border-radius:999px;padding:10px;display:flex;justify-content:space-around;box-shadow:0 12px 30px rgba(0,0,0,.22)}
-.bottom button{border:0;background:none;color:#fff;font-weight:800;cursor:pointer;padding:7px 10px}
-@media(max-width:760px){.layout{grid-template-columns:1fr}.gauge-card{position:static}.gauge{height:270px}.app{padding:10px 10px 96px}header{align-items:flex-start}.logo{font-size:38px}}
+.animal{position:absolute;left:19px;bottom:18px;width:108px;height:122px;transition:bottom .45s;z-index:3;filter:drop-shadow(0 5px 6px rgba(43,34,12,.16))}
+.animal svg{width:100%;height:100%;overflow:visible}
+.gauge:before{content:"";position:absolute;left:74px;top:22px;bottom:22px;width:3px;background:repeating-linear-gradient(to bottom,#c89920 0 2px,transparent 2px 48px);opacity:.45}
+.gauge:after{content:"10m\A 8m\A 6m\A 4m\A 2m\A 0m";white-space:pre;position:absolute;right:7px;top:28px;bottom:25px;display:flex;flex-direction:column;justify-content:space-between;font-size:11px;font-weight:900;color:#81631a;line-height:1}
+@media(max-width:820px){.layout{grid-template-columns:minmax(0,1fr) 230px;gap:14px}.gauge-card{min-height:560px;padding:14px}.gauge{width:128px;height:390px;min-height:330px}.animal{left:10px}.app{padding:10px 10px 96px}.logo{font-size:38px}}
+@media(max-width:620px){.layout{grid-template-columns:1fr}.gauge-card{position:static;height:auto;min-height:0}.gauge{height:300px;min-height:300px}.app{padding:10px 10px 96px}header{align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -73,7 +69,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:14px;bo
 
 <aside class="card gauge-card">
   <div class="gauge-title">ノッポゲージ</div>
-  <div class="height" id="heightText">0.0 m</div>
+  <div class="height" id="heightText">0.0 m</div><div class="pill" id="scoreMini">正解 0 / 5</div>
   <select id="animalSelect" class="animal-select">
     <option value="giraffe">キリン</option>
     <option value="pigeon">ハト</option>
@@ -81,11 +77,38 @@ header{display:flex;justify-content:space-between;align-items:center;gap:14px;bo
   <div class="gauge">
     <div class="fill" id="fill"></div>
     <div class="animal" id="animal">
-      <div id="giraffe"><div class="giraffe-head"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div></div>
-      <div id="pigeon" class="hidden"><div class="pigeon"><div class="wing"></div><div class="beak"></div></div></div>
+      <div id="giraffe" aria-label="キリン">
+        <svg viewBox="0 0 120 140" role="img">
+          <defs><linearGradient id="gBody" x1="0" x2="1"><stop offset="0" stop-color="#ffd84d"/><stop offset="1" stop-color="#f3b92e"/></linearGradient></defs>
+          <rect x="47" y="52" width="27" height="73" rx="13" fill="url(#gBody)" stroke="#d79b18" stroke-width="3"/>
+          <circle cx="53" cy="68" r="6" fill="#9f6c1d"/><circle cx="68" cy="84" r="5" fill="#9f6c1d"/><circle cx="55" cy="103" r="5" fill="#9f6c1d"/><circle cx="69" cy="117" r="5" fill="#9f6c1d"/>
+          <ellipse cx="60" cy="45" rx="37" ry="31" fill="url(#gBody)" stroke="#d79b18" stroke-width="3"/>
+          <ellipse cx="27" cy="42" rx="15" ry="10" fill="#f5c440" stroke="#d79b18" stroke-width="3"/><ellipse cx="93" cy="42" rx="15" ry="10" fill="#f5c440" stroke="#d79b18" stroke-width="3"/>
+          <ellipse cx="27" cy="42" rx="7" ry="4" fill="#c48c21"/><ellipse cx="93" cy="42" rx="7" ry="4" fill="#c48c21"/>
+          <rect x="40" y="7" width="8" height="21" rx="4" fill="#efbf31"/><rect x="72" y="7" width="8" height="21" rx="4" fill="#efbf31"/>
+          <circle cx="44" cy="8" r="7" fill="#9d6b20"/><circle cx="76" cy="8" r="7" fill="#9d6b20"/>
+          <circle cx="47" cy="42" r="4" fill="#30261e"/><circle cx="73" cy="42" r="4" fill="#30261e"/>
+          <ellipse cx="60" cy="58" rx="19" ry="13" fill="#ffe89a"/>
+          <circle cx="53" cy="56" r="2.2" fill="#7b561c"/><circle cx="67" cy="56" r="2.2" fill="#7b561c"/>
+          <path d="M50 63 Q60 72 70 63" fill="none" stroke="#7b561c" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div id="pigeon" class="hidden" aria-label="ハト">
+        <svg viewBox="0 0 120 140" role="img">
+          <ellipse cx="59" cy="86" rx="38" ry="34" fill="#8f9aaa" stroke="#687382" stroke-width="3"/>
+          <circle cx="72" cy="51" r="25" fill="#9ca6b3" stroke="#687382" stroke-width="3"/>
+          <path d="M42 71 Q57 56 78 74 Q58 100 36 94 Z" fill="#707b89"/>
+          <path d="M64 64 Q78 73 87 89" fill="none" stroke="#2f8f78" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="79" cy="46" r="4" fill="#151515"/><circle cx="80" cy="45" r="1.2" fill="#fff"/>
+          <path d="M94 51 L116 58 L95 65 Z" fill="#e4a63a" stroke="#b67b21" stroke-width="2"/>
+          <path d="M36 105 L28 130 M54 113 L51 134" stroke="#d28f2f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M19 130 H36 M42 134 H60" stroke="#d28f2f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M31 81 Q12 68 8 52 Q29 56 45 67" fill="#7f8998" stroke="#687382" stroke-width="3"/>
+        </svg>
+      </div>
     </div>
   </div>
-  <p class="help">正解すると、選んだ動物が上へ伸びます。</p>
+  <p class="help">正解するたびに動物が上へ。クイズ中も右側で進み具合を確認できます。</p>
 </aside>
 </div>
 </div>
@@ -112,6 +135,7 @@ const letters=["A","B","C","D","E","F"];
 function render(){
  const q=questions[index];
  $("progress").textContent=`問題 ${index+1} / ${questions.length}`;
+ $("scoreMini").textContent=`正解 ${score} / ${questions.length}`;
  $("topic").textContent=q.topic||"クイズ";
  $("question").textContent=q.q;
  $("choices").innerHTML="";
@@ -151,6 +175,7 @@ function updateGauge(){
  $("fill").style.height=`${Math.max(0,max*ratio)}px`;
  $("animal").style.bottom=`${22+Math.max(0,max*ratio)}px`;
  $("heightText").textContent=`${height().toFixed(1)} m`;
+ $("scoreMini").textContent=`正解 ${score} / ${questions.length}`;
 }
 function setAnimal(v){
  $("giraffe").classList.toggle("hidden",v!=="giraffe");
