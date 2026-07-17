@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>QuizNoppo</title>
+<style>
+:root{--navy:#0b2c62;--red:#e50036;--yellow:#ffd54b;--green:#2e9b55;--bg:#fffaf1;--line:#dfe4ec;--text:#172033}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic",sans-serif;background:linear-gradient(#fffdf8,#f3f6fb);color:var(--text)}
+button,select,textarea,input{font:inherit}.app{max-width:1180px;margin:auto;padding:16px 16px 96px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:3px solid var(--red);padding:8px 2px 14px;margin-bottom:20px}
+.logo{font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:-2px;color:var(--navy);line-height:1}.logo span{color:var(--red)}
+.tag{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--navy);margin-top:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:0;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--navy);color:#fff}
+.btn.red{background:var(--red)}.btn.light{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px}.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(20,40,75,.08)}
+.topline{display:flex;gap:10px;flex-wrap:wrap}.pill{border-radius:999px;padding:8px 14px;font-weight:800;background:#eef3fb;color:var(--navy)}.pill.topic{background:#fff0bd;color:#725100}
+.question{font-weight:900;font-size:clamp(22px,3.2vw,34px);line-height:1.45;margin:18px 0}.choices{display:grid;gap:12px}
+.choice{display:flex;gap:14px;width:100%;text-align:left;padding:16px;border:2px solid var(--line);border-radius:18px;background:#fff;cursor:pointer}
+.choice:hover{border-color:#9eabc0}.letter{min-width:38px;height:38px;border-radius:50%;background:#eef2f7;display:grid;place-items:center;color:var(--navy);font-size:20px;font-weight:900}
+.choice.correct{border-color:var(--green);background:#eefaf2}.choice.correct .letter{background:var(--green);color:#fff}.choice.wrong{border-color:var(--red);background:#fff0f3}.choice.wrong .letter{background:var(--red);color:#fff}
+.feedback{display:none;margin-top:18px;padding:18px;border-radius:18px;line-height:1.75}.feedback.show{display:block}.feedback.good{background:#eefaf2;border:1px solid #bbdfc6}.feedback.bad{background:#fff0f3;border:1px solid #f2bac7}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.gauge-card{text-align:center;position:sticky;top:14px;height:max-content}
+.gauge-title{font-size:20px;font-weight:900;color:var(--red)}.height{font-size:34px;font-weight:900;color:var(--red);margin:5px}
+.animal-select{width:100%;padding:10px;border:2px solid var(--line);border-radius:12px;background:#fff;margin:8px 0}
+.gauge{position:relative;width:126px;height:510px;margin:12px auto 0;border:3px solid var(--yellow);border-radius:65px 65px 24px 24px;background:linear-gradient(#fff7cc,#fff);overflow:hidden}
+.fill{position:absolute;bottom:24px;left:45px;width:36px;height:0;background:linear-gradient(#ff7958,var(--red));border-radius:18px 18px 4px 4px;transition:.45s;height .45s}
+.animal{position:absolute;left:21px;bottom:22px;width:80px;height:80px;transition:bottom .45s;z-index:3}
+.giraffe-head{width:76px;height:78px;background:var(--yellow);border-radius:44% 44% 50% 50%;position:relative;margin:auto}.giraffe-head:before,.giraffe-head:after{content:"";position:absolute;top:-17px;width:13px;height:26px;background:var(--yellow);border-radius:50%}.giraffe-head:before{left:15px}.giraffe-head:after{right:15px}
+.eye{position:absolute;top:29px;width:7px;height:7px;background:#4a3820;border-radius:50%}.eye.l{left:21px}.eye.r{right:21px}.mouth{position:absolute;left:25px;top:49px;width:26px;height:10px;border-bottom:3px solid #865e1c;border-radius:50%}
+.pigeon{width:72px;height:58px;border-radius:50% 50% 46% 46%;background:#8b96a5;position:relative;margin:12px auto 0}.pigeon:before{content:"";position:absolute;right:-18px;top:18px;border-left:22px solid #8b96a5;border-top:10px solid transparent;border-bottom:10px solid transparent}.pigeon:after{content:"";position:absolute;left:21px;top:20px;width:8px;height:8px;border-radius:50%;background:#111}
+.beak{position:absolute;right:-29px;top:23px;border-left:13px solid #e8a433;border-top:6px solid transparent;border-bottom:6px solid transparent}.wing{position:absolute;left:10px;top:25px;width:33px;height:20px;background:#707b89;border-radius:50%}
+.import{display:none;margin-bottom:20px}.import.show{display:block}textarea{width:100%;min-height:250px;border:2px solid var(--line);border-radius:16px;padding:14px;resize:vertical}
+.help{font-size:14px;color:#697386;line-height:1.7}.result{text-align:center;padding:28px}.score{font-size:64px;font-weight:900;color:var(--red)}.hidden{display:none!important}
+.bottom{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(760px,calc(100% - 22px));background:var(--navy);border-radius:999px;padding:10px;display:flex;justify-content:space-around;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.bottom button{border:0;background:none;color:#fff;font-weight:800;cursor:pointer;padding:7px 10px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.gauge-card{position:static}.gauge{height:270px}.app{padding:10px 10px 96px}header{align-items:flex-start}.logo{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><div class="logo">Quiz<span>Noppo</span></div><div class="tag">LEARN. THINK. ENJOY!</div></div>
+  <div class="actions">
+    <button class="btn light" id="importBtn">問題を読み込む</button>
+    <button class="btn" id="restartBtn">最初から</button>
+  </div>
+</header>
+
+<section id="importPanel" class="card import">
+  <h2>問題データを読み込む</h2>
+  <p class="help">下の形式で貼り付けて「読み込む」を押してください。複数問を続けて記述できます。</p>
+  <textarea id="importText"></textarea>
+  <div class="actions" style="margin-top:12px;justify-content:flex-start">
+    <button class="btn red" id="loadBtn">この問題を読み込む</button>
+    <button class="btn light" id="sampleBtn">鉄道サンプルを入れる</button>
+    <button class="btn light" id="closeImportBtn">閉じる</button>
+  </div>
+</section>
+
+<div class="layout">
+<main class="card" id="quizCard">
+  <div class="topline"><div class="pill" id="progress">問題 1 / 5</div><div class="pill topic" id="topic">鉄道クイズ</div></div>
+  <div class="question" id="question"></div>
+  <div class="choices" id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+  <div class="navrow">
+    <button class="btn light" id="prevBtn">← 前の問題</button>
+    <button class="btn red" id="nextBtn">次の問題 →</button>
+  </div>
+</main>
+
+<aside class="card gauge-card">
+  <div class="gauge-title">ノッポゲージ</div>
+  <div class="height" id="heightText">0.0 m</div>
+  <select id="animalSelect" class="animal-select">
+    <option value="giraffe">キリン</option>
+    <option value="pigeon">ハト</option>
+  </select>
+  <div class="gauge">
+    <div class="fill" id="fill"></div>
+    <div class="animal" id="animal">
+      <div id="giraffe"><div class="giraffe-head"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div></div>
+      <div id="pigeon" class="hidden"><div class="pigeon"><div class="wing"></div><div class="beak"></div></div></div>
+    </div>
+  </div>
+  <p class="help">正解すると、選んだ動物が上へ伸びます。</p>
+</aside>
+</div>
+</div>
+
+<nav class="bottom">
+<button id="navQuiz">🚆 クイズ</button>
+<button id="navImport">📥 読み込み</button>
+<button id="navAnimal">🦒 動物</button>
+</nav>
+
+<script>
+const railwayQuestions = [
+ {topic:"鉄道クイズ",q:"日本で最初に鉄道が正式開業した区間はどれ？",choices:["新橋―横浜","東京―上野","大阪―神戸","京都―大阪"],answer:0,explanation:"1872年、新橋と横浜の間で日本初の鉄道が正式開業しました。"},
+ {topic:"鉄道クイズ",q:"新幹線の愛称「のぞみ」が最初に登場した路線は？",choices:["東海道新幹線","東北新幹線","上越新幹線","九州新幹線"],answer:0,explanation:"「のぞみ」は1992年に東海道新幹線で運転を開始しました。"},
+ {topic:"鉄道クイズ",q:"鉄道の線路の幅を表す言葉は？",choices:["ホーム幅","軌間","車幅","路肩"],answer:1,explanation:"2本のレールの内側どうしの間隔を「軌間」といいます。"},
+ {topic:"鉄道クイズ",q:"駅で列車の進行方向を変えるために使われる線路設備は？",choices:["転車台","分岐器","架線柱","踏切"],answer:1,explanation:"分岐器はポイントとも呼ばれ、列車を別の線路へ進ませる設備です。"},
+ {topic:"鉄道クイズ",q:"電車が外部から電気を受け取る装置はどれ？",choices:["パンタグラフ","連結器","台車","排障器"],answer:0,explanation:"パンタグラフは架線から電気を取り入れる装置です。"}
+];
+
+let questions = [...railwayQuestions], index=0, answered={}, score=0;
+const $=id=>document.getElementById(id);
+const letters=["A","B","C","D","E","F"];
+
+function render(){
+ const q=questions[index];
+ $("progress").textContent=`問題 ${index+1} / ${questions.length}`;
+ $("topic").textContent=q.topic||"クイズ";
+ $("question").textContent=q.q;
+ $("choices").innerHTML="";
+ q.choices.forEach((text,i)=>{
+   const b=document.createElement("button"); b.className="choice";
+   b.innerHTML=`<span class="letter">${letters[i]}</span><span>${escapeHtml(text)}</span>`;
+   if(answered[index]!==undefined){
+     b.classList.add("locked");
+     if(i===q.answer)b.classList.add("correct");
+     if(i===answered[index] && i!==q.answer)b.classList.add("wrong");
+   } else b.onclick=()=>answer(i);
+   $("choices").appendChild(b);
+ });
+ const fb=$("feedback");
+ if(answered[index]!==undefined){
+   const ok=answered[index]===q.answer;
+   fb.className=`feedback show ${ok?"good":"bad"}`;
+   fb.innerHTML=`<strong>${ok?"正解！":"不正解"}</strong><br>${escapeHtml(q.explanation||"")}`;
+ } else {fb.className="feedback";fb.innerHTML="";}
+ $("prevBtn").disabled=index===0;
+ $("nextBtn").textContent=index===questions.length-1?"結果を見る":"次の問題 →";
+ updateGauge();
+}
+function answer(i){answered[index]=i;if(i===questions[index].answer)score++;render()}
+function next(){
+ if(index<questions.length-1){index++;render()}else showResult()
+}
+function showResult(){
+ $("quizCard").innerHTML=`<div class="result"><h2>結果</h2><div class="score">${score} / ${questions.length}</div><p>ノッポゲージは ${height().toFixed(1)} m まで伸びました。</p><button class="btn red" onclick="restart()">もう一度挑戦</button></div>`;
+}
+function restart(){index=0;answered={};score=0;location.reload()}
+function height(){return score*1.8}
+function updateGauge(){
+ const ratio=questions.length?score/questions.length:0;
+ const gauge=document.querySelector(".gauge");
+ const max=gauge.clientHeight-110;
+ $("fill").style.height=`${Math.max(0,max*ratio)}px`;
+ $("animal").style.bottom=`${22+Math.max(0,max*ratio)}px`;
+ $("heightText").textContent=`${height().toFixed(1)} m`;
+}
+function setAnimal(v){
+ $("giraffe").classList.toggle("hidden",v!=="giraffe");
+ $("pigeon").classList.toggle("hidden",v!=="pigeon");
+ localStorage.setItem("quiznoppo-animal",v);
+}
+function parseText(text){
+ const blocks=text.split(/\n(?=#\s*Q|\n---+\n)/g).map(s=>s.trim()).filter(Boolean);
+ const out=[];
+ for(const block of blocks){
+   const topic=(block.match(/Topic:\s*(.+)/i)||[])[1]||"読み込みクイズ";
+   const q=(block.match(/Q:\s*(.+)/i)||[])[1];
+   const choiceLines=[...block.matchAll(/^\s*-\s*([A-F])[:：]\s*(.+)$/gmi)];
+   const ans=((block.match(/Answer:\s*([A-F])/i)||[])[1]||"A").toUpperCase();
+   const explanation=(block.match(/Explanation:\s*([\s\S]*)/i)||[])[1]?.trim()||"";
+   if(q && choiceLines.length>=2) out.push({topic,q,choices:choiceLines.map(m=>m[2].trim()),answer:letters.indexOf(ans),explanation});
+ }
+ return out;
+}
+function loadText(){
+ const parsed=parseText($("importText").value);
+ if(!parsed.length){alert("問題を読み取れませんでした。サンプル形式を確認してください。");return}
+ questions=parsed;index=0;answered={};score=0;$("importPanel").classList.remove("show");render();
+}
+function sampleText(){
+ $("importText").value=`# Q1
+Topic: 鉄道クイズ
+Q: 日本で最初に鉄道が正式開業した区間はどれ？
+- A: 新橋―横浜
+- B: 東京―上野
+- C: 大阪―神戸
+- D: 京都―大阪
+Answer: A
+Explanation: 1872年、新橋と横浜の間で日本初の鉄道が正式開業しました。
+
+# Q2
+Topic: 鉄道クイズ
+Q: 鉄道の線路の幅を表す言葉は？
+- A: ホーム幅
+- B: 軌間
+- C: 車幅
+- D: 路肩
+Answer: B
+Explanation: 2本のレールの内側どうしの間隔を「軌間」といいます。`;
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+$("nextBtn").onclick=next;$("prevBtn").onclick=()=>{if(index>0){index--;render()}};
+$("importBtn").onclick=$("navImport").onclick=()=>$("importPanel").classList.toggle("show");
+$("closeImportBtn").onclick=()=>$("importPanel").classList.remove("show");
+$("loadBtn").onclick=loadText;$("sampleBtn").onclick=sampleText;
+$("restartBtn").onclick=()=>location.reload();
+$("animalSelect").onchange=e=>setAnimal(e.target.value);
+$("navAnimal").onclick=()=>{$("animalSelect").focus();$("animalSelect").scrollIntoView({behavior:"smooth",block:"center"})};
+$("navQuiz").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+const saved=localStorage.getItem("quiznoppo-animal")||"giraffe";$("animalSelect").value=saved;setAnimal(saved);
+window.addEventListener("resize",updateGauge);render();
+</script>
+</body>
+</html>
